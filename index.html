@@ -200,7 +200,7 @@
 <div id="executorModal" class="modal-overlay"><div class="modal-card" id="modalContent"></div></div>
 
 <script>
-  // ----- EXECUTOR DATA (Final: mobile unchanged, PC all cracked/encrypted with passwords) -----
+  // ----- EXECUTOR DATA (with direct links for Volt, Volcano, Velocity, Potassium, Etheria) -----
   const executors = [
     // SPONSORED
     { 
@@ -210,17 +210,18 @@
       platforms: ["pc"],
       password: "syntax2025",
       sponsored: true,
-      cracked: false
+      cracked: false,
+      pcLink: null  // no direct link yet
     },
     // PC EXECUTORS (all cracked / encrypted)
-    { name: "Script-Ware", rating: "4.9 ★", downloads: "198K", status: "Cracked", description: "Premium level executor, robust API. Cracked version.", overview: "Script-Ware is industry standard, full LuaU support. This is a cracked, encrypted version that requires password.", platforms: ["pc"], password: "sware_cracked", cracked: true },
-    { name: "Solara", rating: "4.9 ★", downloads: "95K", status: "Cracked", description: "Modern UI, instant script execution. Cracked release.", overview: "Solara is next-gen with auto-update. This cracked version is encrypted for safety.", platforms: ["pc"], password: "solar_crack", cracked: true },
-    { name: "Wave Executor", rating: "4.7 ★", downloads: "47.3K", status: "Cracked", description: "Wave execution engine, low resource usage. Cracked.", overview: "Wave uses unique obfuscation. The cracked version is password-protected.", platforms: ["pc"], password: "wave_cracked", cracked: true },
-    { name: "Velocity Executor", rating: "4.8 ★", downloads: "63K", status: "Cracked", description: "Velocity core with speed optimization. Cracked/encrypted.", overview: "Velocity offers high performance. This is a cracked, encrypted copy.", platforms: ["pc"], password: "velocity_crack", cracked: true },
-    { name: "Potassium Executor", rating: "4.6 ★", downloads: "12K", status: "Cracked", description: "Lightweight executor with clean interface. Cracked.", overview: "Potassium focuses on stability. Cracked version with encryption.", platforms: ["pc"], password: "potassium_crack", cracked: true },
-    { name: "Volcano Executor", rating: "4.7 ★", downloads: "8.5K", status: "Cracked", description: "Hot performance, cool UI. Cracked release.", overview: "Volcano delivers powerful execution. This is a cracked, password-protected build.", platforms: ["pc"], password: "volcano_crack", cracked: true },
-    { name: "Etheria Executor", rating: "4.8 ★", downloads: "21K", status: "Cracked", description: "Ethereal execution experience. Cracked.", overview: "Etheria combines elegance with power. Cracked version encrypted.", platforms: ["pc"], password: "etheria_crack", cracked: true },
-    { name: "Volt", rating: "4.7 ★", downloads: "40K", status: "Cracked", description: "Volt lightweight executor, clean. Cracked.", overview: "Volt focuses on simplicity. This cracked version is encrypted.", platforms: ["pc"], password: "volt_crack", cracked: true },
+    { name: "Script-Ware", rating: "4.9 ★", downloads: "198K", status: "Cracked", description: "Premium level executor, robust API. Cracked version.", overview: "Script-Ware is industry standard, full LuaU support. This is a cracked, encrypted version that requires password.", platforms: ["pc"], password: "sware_cracked", cracked: true, pcLink: null },
+    { name: "Solara", rating: "4.9 ★", downloads: "95K", status: "Cracked", description: "Modern UI, instant script execution. Cracked release.", overview: "Solara is next-gen with auto-update. This cracked version is encrypted for safety.", platforms: ["pc"], password: "solar_crack", cracked: true, pcLink: null },
+    { name: "Wave Executor", rating: "4.7 ★", downloads: "47.3K", status: "Cracked", description: "Wave execution engine, low resource usage. Cracked.", overview: "Wave uses unique obfuscation. The cracked version is password-protected.", platforms: ["pc"], password: "wave_cracked", cracked: true, pcLink: null },
+    { name: "Velocity Executor", rating: "4.8 ★", downloads: "63K", status: "Cracked", description: "Velocity core with speed optimization. Cracked/encrypted.", overview: "Velocity offers high performance. This is a cracked, encrypted copy.", platforms: ["pc"], password: "velocity_crack", cracked: true, pcLink: "https://files.catbox.moe/tzvd1l.zip" },
+    { name: "Potassium Executor", rating: "4.6 ★", downloads: "12K", status: "Cracked", description: "Lightweight executor with clean interface. Cracked.", overview: "Potassium focuses on stability. Cracked version with encryption.", platforms: ["pc"], password: "potassium_crack", cracked: true, pcLink: "https://files.catbox.moe/nu7nwm.zip" },
+    { name: "Volcano Executor", rating: "4.7 ★", downloads: "8.5K", status: "Cracked", description: "Hot performance, cool UI. Cracked release.", overview: "Volcano delivers powerful execution. This is a cracked, password-protected build.", platforms: ["pc"], password: "volcano_crack", cracked: true, pcLink: "https://files.catbox.moe/brfutk.zip" },
+    { name: "Etheria Executor", rating: "4.8 ★", downloads: "21K", status: "Cracked", description: "Ethereal execution experience. Cracked.", overview: "Etheria combines elegance with power. Cracked version encrypted.", platforms: ["pc"], password: "etheria_crack", cracked: true, pcLink: "https://files.catbox.moe/r8y7qn.zip" },
+    { name: "Volt", rating: "4.7 ★", downloads: "40K", status: "Cracked", description: "Volt lightweight executor, clean. Cracked.", overview: "Volt focuses on simplicity. This cracked version is encrypted.", platforms: ["pc"], password: "volt_crack", cracked: true, pcLink: "https://files.catbox.moe/qbhc4q.zip" },
     // MOBILE EXECUTORS (unchanged)
     { 
       name: "Delta Executor", rating: "4.9 ★", downloads: "41K", status: "Active", 
@@ -353,17 +354,22 @@
       const pcBtn = document.getElementById('pcDownloadBtn');
       if (pcBtn) {
         pcBtn.addEventListener('click', () => {
-          // Simulate download; replace with real URL in production
-          const blob = new Blob([`-- ${executor.name} PC Executor (Cracked/Encrypted)\n-- Password: ${executor.password}\n-- This is a placeholder. Replace with actual executable.\nprint("${executor.name} ready")`], { type: 'application/octet-stream' });
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = `${executor.name.toLowerCase().replace(/\s/g, '_')}_cracked.exe`;
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          URL.revokeObjectURL(url);
-          alert(`Download started: ${executor.name} setup. Use password: ${executor.password} to extract/install. (Cracked version)`);
+          if (executor.pcLink) {
+            // Direct download link provided – trigger without opening new tab
+            triggerDirectDownload(executor.pcLink);
+          } else {
+            // Fallback to simulated download
+            const blob = new Blob([`-- ${executor.name} PC Executor (Cracked/Encrypted)\n-- Password: ${executor.password}\n-- This is a placeholder. Replace with actual executable.\nprint("${executor.name} ready")`], { type: 'application/octet-stream' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${executor.name.toLowerCase().replace(/\s/g, '_')}_cracked.exe`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            alert(`Download started: ${executor.name} setup. Use password: ${executor.password} to extract/install. (Cracked version)`);
+          }
         });
       }
     }
@@ -371,6 +377,17 @@
     const closeBtn = modalContent.querySelector('.close-modal');
     closeBtn.addEventListener('click', () => modal.classList.remove('active'));
     modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
+  }
+
+  // Function to trigger direct download without opening a new tab
+  function triggerDirectDownload(url) {
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = '';
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   }
 
   function triggerDownload(url, filename) {
@@ -408,15 +425,10 @@
     const modal = document.getElementById('executorModal');
     const modalContent = document.getElementById('modalContent');
     modalContent.innerHTML = `
-      <h3><i class="fas fa-users"></i> FAQ & Direct Link Info</h3>
-      <div class="modal-overview"><strong>❓ How do I download mobile executors?</strong> Click IPA/APK buttons — those are direct links to the files.</div>
-      <div class="modal-overview"><strong>🔐 PC executors (cracked) require password:</strong> Each cracked executor has its own password shown in the modal. These are encrypted files; use the provided password to extract.</div>
-      <div class="modal-overview"><strong>🔗 Creating direct links:</strong> Upload your IPA/APK/EXE to a host (e.g., MediaFire, Google Drive) and get a shareable URL. Replace the demo URLs with real ones.</div>
-      <div class="social-icons" style="display: flex; gap: 1rem; margin: 1rem 0; justify-content:center;">
-        <i class="fab fa-discord fa-2x" style="color:#a855f7; cursor:pointer;" onclick="window.open('https://discord.gg/nebula','_blank')"></i>
-        <i class="fab fa-telegram fa-2x" style="color:#a855f7; cursor:pointer;" onclick="window.open('https://t.me/nebula','_blank')"></i>
-        <i class="fab fa-github fa-2x" style="color:#a855f7; cursor:pointer;" onclick="window.open('https://github.com/nebula','_blank')"></i>
-      </div>
+      <h3><i class="fas fa-question-circle"></i> Frequently Asked Questions</h3>
+      <div class="modal-overview"><strong>❓ How do I download mobile executors?</strong><br>Click the IPA (iOS) or APK (Android) button in the executor modal. The file will download directly.</div>
+      <div class="modal-overview"><strong>🔐 PC executors (cracked) require a password.</strong><br>Each cracked executor has its own password shown in the modal. These are encrypted files; use the provided password to extract/install.</div>
+      <div class="modal-overview"><strong>🛡️ Are these executors safe?</strong><br>All executors listed are community-tested and regularly updated. Use at your own discretion.</div>
       <button class="close-modal">Close</button>
     `;
     modal.classList.add('active');
