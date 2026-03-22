@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Nebula | Next-Gen Executor Hub</title>
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #05010f;
+      font-family: 'Inter', sans-serif;
+      color: #edeaff;
+      scroll-behavior: smooth;
+    }
+
+    :root {
+      --bg-dark: #03000c;
+      --card-bg: #0d071f;
+      --purple-primary: #a855f7;
+      --purple-deep: #7c3aed;
+      --purple-soft: #c084fc;
+      --border-light: #2a1e4a;
+      --text-dim: #b9b0e6;
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0a021a; }
+    ::-webkit-scrollbar-thumb { background: #a855f7; border-radius: 20px; }
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(5, 1, 18, 0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid #2a1e4a;
+      padding: 1rem 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.2rem;
+    }
+
+    .logo h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.9rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #f0eaff 30%, #c084fc 80%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .logo span {
+      font-size: 0.7rem;
+      color: #a855f7;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: none;
+      color: #cdc6ff;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: 0.2s;
+      font-family: inherit;
+    }
+
+    .nav-btn:hover {
+      background: #1f1738;
+      color: #c084fc;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.5rem 2rem 4rem;
+    }
+
+    .hero {
+      text-align: center;
+      margin: 2.5rem 0 2rem;
+    }
+
+    .badge-purple {
+      background: rgba(168, 85, 247, 0.15);
+      border: 1px solid #6b21a5;
+      display: inline-block;
+      padding: 0.4rem 1.2rem;
+      border-radius: 60px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #d9b4ff;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h2 {
+      font-size: 3rem;
+      font-weight: 800;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(115deg, #ffffff 20%, #c084fc 80%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: #b9b0e6;
+      max-width: 650px;
+      margin: 1rem auto 2rem;
+    }
+
+    .btn-primary {
+      background: #7c3aed;
+      border: none;
+      padding: 0.85rem 2rem;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 1rem;
+      color: white;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 0 12px rgba(124, 58, 237, 0.5);
+    }
+
+    .btn-primary:hover {
+      background: #a855f7;
+      transform: scale(1.02);
+    }
+
+    .advantages {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.8rem;
+      margin: 3rem 0;
+    }
+
+    .adv-card {
+      background: #0d071f;
+      border-radius: 24px;
+      padding: 1.6rem;
+      border: 1px solid #2a1e4a;
+      transition: 0.2s;
+    }
+
+    .adv-card i {
+      font-size: 2.2rem;
+      color: #c084fc;
+      margin-bottom: 1rem;
+    }
+
+    .adv-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 2.5rem 0 1rem;
+      border-left: 5px solid #a855f7;
+      padding-left: 1rem;
+    }
+
+    .executor-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.8rem;
+      margin: 1.5rem 0 2rem;
+    }
+
+    @media (max-width: 780px) {
+      .executor-grid {
+        grid-template-columns: 1fr;
+      }
+      .container {
+        padding: 1rem 1.2rem;
+      }
+      .hero h2 {
+        font-size: 2rem;
+      }
+    }
+
+    @media (min-width: 781px) and (max-width: 1024px) {
+      .executor-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .executor-card {
+      background: #0a031c;
+      border-radius: 28px;
+      border: 1px solid #2a1e4a;
+      padding: 1.5rem;
+      cursor: pointer;
+      transition: 0.25s;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease, border 0.2s;
+    }
+
+    .executor-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .executor-card:hover {
+      border-color: #a855f7;
+      box-shadow: 0 8px 24px rgba(168, 85, 247, 0.2);
+    }
+
+    .executor-name {
+      font-size: 1.6rem;
+      font-weight: 700;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .executor-rating {
+      color: #fbbf24;
+      font-size: 0.9rem;
+    }
+
+    .executor-desc {
+      color: #b3a7e6;
+      margin: 0.8rem 0;
+      font-size: 0.9rem;
+    }
+
+    .executor-stats {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.8rem;
+      margin-top: 1rem;
+      color: #b9b0e6;
+    }
+
+    .status-badge {
+      background: #10b98120;
+      color: #6ee7b7;
+      border-radius: 40px;
+      padding: 0.2rem 0.7rem;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.2s;
+    }
+
+    .modal-overlay.active {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .modal-card {
+      background: #0f0725;
+      border: 1px solid #a855f7;
+      border-radius: 32px;
+      max-width: 550px;
+      width: 90%;
+      padding: 2rem;
+      box-shadow: 0 20px 35px rgba(0, 0, 0, 0.6);
+    }
+
+    .modal-card h3 {
+      font-size: 1.8rem;
+      color: #c084fc;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-overview {
+      margin: 1rem 0;
+      color: #cfc6ff;
+      line-height: 1.4;
+    }
+
+    .password-area {
+      background: #1a102f;
+      border-radius: 20px;
+      padding: 0.8rem;
+      margin: 1rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .download-buttons {
+      display: flex;
+      gap: 1rem;
+      margin: 1rem 0;
+      flex-wrap: wrap;
+    }
+
+    .download-btn-modal {
+      background: #7c3aed;
+      border: none;
+      padding: 0.8rem 1.2rem;
+      border-radius: 60px;
+      font-weight: bold;
+      color: white;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      flex: 1;
+      justify-content: center;
+      transition: 0.2s;
+    }
+
+    .download-btn-modal:hover {
+      background: #a855f7;
+      transform: scale(1.02);
+    }
+
+    .close-modal {
+      background: transparent;
+      border: 1px solid #a855f7;
+      margin-top: 1rem;
+      padding: 0.5rem;
+      border-radius: 40px;
+      width: 100%;
+      color: white;
+      cursor: pointer;
+    }
+
+    /* You may also like */
+    .like-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0 3rem;
+    }
+
+    .like-card {
+      background: #0a031c;
+      border-radius: 20px;
+      padding: 1.2rem;
+      border: 1px solid #2f2452;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .like-card:hover {
+      border-color: #a855f7;
+    }
+
+    .info-box {
+      background: #0d071f;
+      border-radius: 24px;
+      padding: 1.2rem;
+      margin: 2rem 0 1rem;
+      border-left: 4px solid #a855f7;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 0 1rem;
+      border-top: 1px solid #1f1738;
+      margin-top: 2rem;
+      font-size: 0.8rem;
+      color: #8a7ebf;
+    }
+  </style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="logo">
+    <h1>NEBULA<span> | EXECUTOR HUB</span></h1>
+  </div>
+  <div class="nav-links">
+    <button class="nav-btn" id="browseBtn"><i class="fas fa-crown"></i> Browse Executors</button>
+    <button class="nav-btn" id="faqBtn"><i class="fas fa-question-circle"></i> FAQ / Info</button>
+  </div>
+</div>
+
+<main class="container">
+  <div class="hero">
+    <div class="badge-purple"><i class="fas fa-shield-alt"></i> Undetected · Next-Gen Execution</div>
+    <h2>Dominate Every Game with<br>Nebula Executor Suite</h2>
+    <p>Powerful, stable script execution — custom Roblox executors & tools. Made by players, for players.</p>
+    <button class="btn-primary" id="heroBrowseBtn"><i class="fas fa-download"></i> Explore Executors</button>
+  </div>
+
+  <!-- Advantages -->
+  <div class="advantages">
+    <div class="adv-card"><i class="fas fa-eye-slash"></i><h3>Always Undetected</h3><p>Regular updates & advanced bypasses.</p></div>
+    <div class="adv-card"><i class="fas fa-sync-alt"></i><h3>Auto Updates</h3><p>Instant patches after game updates.</p></div>
+    <div class="adv-card"><i class="fas fa-headset"></i><h3>24/7 Support</h3><p>Dedicated community & help desk.</p></div>
+  </div>
+
+  <!-- Executors grid -->
+  <div id="executorsSection">
+    <div class="section-title"><i class="fas fa-code-branch"></i> Premium Executors Library</div>
+    <div class="executor-grid" id="executorGrid"></div>
+  </div>
+
+  <!-- You May Also Like -->
+  <div class="section-title"><i class="fas fa-thumbs-up"></i> You May Also Like</div>
+  <div class="like-grid" id="likeGrid"></div>
+
+  <!-- Info: How to create direct links -->
+  <div class="info-box">
+    <i class="fas fa-link" style="color:#c084fc; margin-right: 8px;"></i>
+    <strong style="color:#c084fc;">🔗 How to create direct download links:</strong>
+    <p style="margin-top: 8px; font-size: 0.9rem;">For IPA/APK files, upload your file to a reliable host (e.g., MediaFire, Google Drive, or a CDN) and obtain a direct download URL. Use that URL in the <code>href</code> attribute of an anchor tag or trigger a download via JavaScript <code>window.open(url, '_blank')</code>. For PC executables, you can provide password-protected archives with the password shown in the modal. Always ensure files are safe and respect distribution policies.</p>
+  </div>
+
+  <footer>
+    <i class="fas fa-shield-alt"></i> Nebula — next-gen execution tools | <span id="currentYear"></span><br>
+    <span style="font-size:0.7rem;">For educational purposes only. Respect game policies.</span>
+  </footer>
+</main>
+
+<!-- Modal for executor details -->
+<div id="executorModal" class="modal-overlay">
+  <div class="modal-card" id="modalContent"></div>
+</div>
+
+<script>
+  // Executor data
+  const executors = [
+    { 
+      name: "Delta Executor", rating: "4.9 ★", downloads: "41K", status: "Active", 
+      description: "Powerful executor with clean GUI, supports all scripts.",
+      overview: "Delta Executor lets you use scripts and hacks in Roblox with ease. Run it in-game, insert any script, control features via a clean GUI, and enjoy full functionality.",
+      platforms: ["ipa", "apk"],   // mobile: both
+      mobileLinks: { ipa: "https://nebula.cdn/delta_executor.ipa", apk: "https://nebula.cdn/delta_executor.apk" }
+    },
+    { 
+      name: "Arceus X Neo", rating: "4.8 ★", downloads: "112K", status: "Active", 
+      description: "Advanced script hub + multi-game support.",
+      overview: "Arceus X Neo offers a built-in script hub, mobile support & powerful Lua executor. Best for exploiters on the go.",
+      platforms: ["ipa", "apk"],
+      mobileLinks: { ipa: "https://nebula.cdn/arceusx.ipa", apk: "https://nebula.cdn/arceusx.apk" }
+    },
+    { 
+      name: "Fluxus", rating: "4.5 ★", downloads: "210K", status: "Active", 
+      description: "Fluxus legacy executor, keyless after HWID.",
+      overview: "Fluxus offers easy to use interface and many script functions. Great for beginners and advanced users.",
+      platforms: ["apk"],
+      mobileLinks: { apk: "https://nebula.cdn/fluxus.apk" }
+    },
+    { 
+      name: "Codex", rating: "4.4 ★", downloads: "28K", status: "Beta", 
+      description: "Experimental executor with cloud scripts.",
+      overview: "Codex focuses on script library integration and fast updates. Lightweight and efficient.",
+      platforms: ["ipa", "apk"],
+      mobileLinks: { ipa: "https://nebula.cdn/codex.ipa", apk: "https://nebula.cdn/codex.apk" }
+    },
+    { 
+      name: "KRNL", rating: "4.7 ★", downloads: "500K+", status: "Active", 
+      description: "Legendary free executor, key system but reliable.",
+      overview: "KRNL remains one of the most trusted free executors with robust stability. PC only.",
+      platforms: ["pc"],
+      password: "krnlkey2026"
+    },
+    { 
+      name: "Xeno Executor", rating: "4.6 ★", downloads: "34K", status: "Maintained", 
+      description: "Lightweight & stealth execution.",
+      overview: "Xeno focuses on minimal detection and high compatibility. PC exclusive.",
+      platforms: ["pc"],
+      password: "xen0pass"
+    },
+    { 
+      name: "Solara", rating: "4.9 ★", downloads: "95K", status: "Active", 
+      description: "Modern UI, instant script execution.",
+      overview: "Solara is next-gen with auto-update and premium script support.",
+      platforms: ["pc"],
+      password: "solar@123"
+    },
+    { 
+      name: "Wave Executor", rating: "4.7 ★", downloads: "47.3K", status: "Stable", 
+      description: "Wave execution engine, low resource usage.",
+      overview: "Wave uses unique obfuscation, very stable for heavy scripts.",
+      platforms: ["pc"],
+      password: "wave2024"
+    },
+    { 
+      name: "Swift Executor", rating: "4.6 ★", downloads: "52K", status: "Active", 
+      description: "Swift & modern UI, high performance.",
+      overview: "Swift delivers ultra-low latency script injection.",
+      platforms: ["pc"],
+      password: "swiftpass"
+    },
+    { 
+      name: "Ronix Executor", rating: "4.5 ★", downloads: "31K", status: "Active", 
+      description: "Ronix easy setup + stability.",
+      overview: "User-friendly executor with great script compatibility.",
+      platforms: ["pc"],
+      password: "ronixkey"
+    },
+    { 
+      name: "Velocity Executor", rating: "4.8 ★", downloads: "63K", status: "Active", 
+      description: "Velocity core with speed optimization.",
+      overview: "Velocity offers high performance and consistent updates.",
+      platforms: ["pc"],
+      password: "velocity#1"
+    },
+    { 
+      name: "Hydrogen", rating: "4.3 ★", downloads: "102K", status: "Active", 
+      description: "Mobile + PC cross executor.",
+      overview: "Hydrogen supports both Android and Windows, multi-platform.",
+      platforms: ["pc"],
+      password: "hydro@gen"
+    },
+    { 
+      name: "Script-Ware", rating: "4.9 ★", downloads: "198K", status: "Premium", 
+      description: "Premium level executor, robust API.",
+      overview: "Script-Ware is industry standard, full LuaU support and debug library.",
+      platforms: ["pc"],
+      password: "sware_pass"
+    },
+    { 
+      name: "Synapse X", rating: "5.0 ★", downloads: "750K", status: "Legendary", 
+      description: "Gold standard of Roblox execution.",
+      overview: "Synapse X features the most powerful script engine and extensive API.",
+      platforms: ["pc"],
+      password: "synx_private"
+    },
+    { 
+      name: "Volt", rating: "4.7 ★", downloads: "40K", status: "Stable", 
+      description: "Volt lightweight executor, clean.",
+      overview: "Volt focuses on simplicity and performance for beginners.",
+      platforms: ["pc"],
+      password: "volt2026"
+    }
+  ];
+
+  // You May Also Like items
+  const alsoLike = [
+    { name: "Blox Fruits Auto Farm", icon: "fas fa-fish", desc: "Auto farm, chest ESP, teleport" },
+    { name: "Dragon Adventures Script", icon: "fas fa-dragon", desc: "Auto incubate, alchemy, autofarm" },
+    { name: "Dead by Daylight Cheat", icon: "fas fa-skull", desc: "ESP, wallhack, speed hack" },
+    { name: "Arsenal Aimbot", icon: "fas fa-crosshairs", desc: "Silent aim, triggerbot, ESP" }
+  ];
+
+  let currentExecutor = null;
+
+  function renderExecutors() {
+    const grid = document.getElementById('executorGrid');
+    grid.innerHTML = '';
+    executors.forEach((ex, idx) => {
+      const card = document.createElement('div');
+      card.className = 'executor-card';
+      card.setAttribute('data-index', idx);
+      card.innerHTML = `
+        <div class="executor-name">${ex.name} <span class="executor-rating">${ex.rating}</span></div>
+        <div class="executor-desc">${ex.description}</div>
+        <div class="executor-stats">
+          <span><i class="fas fa-download"></i> ${ex.downloads}</span>
+          <span class="status-badge"><i class="fas fa-circle" style="font-size: 0.5rem; color: #10b981;"></i> ${ex.status}</span>
+        </div>
+      `;
+      card.addEventListener('click', () => openExecutorModal(ex));
+      grid.appendChild(card);
+    });
+
+    // Intersection Observer for fade-in
+    const cards = document.querySelectorAll('.executor-card');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    cards.forEach(card => observer.observe(card));
+    // initial visible ones
+    cards.forEach(card => {
+      const rect = card.getBoundingClientRect();
+      if (rect.top < window.innerHeight - 100) card.classList.add('visible');
+    });
+  }
+
+  function openExecutorModal(executor) {
+    currentExecutor = executor;
+    const modal = document.getElementById('executorModal');
+    const modalContent = document.getElementById('modalContent');
+    const isMobilePlatform = executor.platforms && executor.platforms.includes('apk') || executor.platforms.includes('ipa');
+    
+    let html = `
+      <h3><i class="fas fa-microchip"></i> ${executor.name}</h3>
+      <div class="modal-overview"><strong>📌 Overview:</strong> ${executor.overview}</div>
+      <div class="modal-overview"><i class="fas fa-chart-line"></i> Rating: ${executor.rating}  •  ${executor.downloads} downloads  •  Status: ${executor.status}</div>
+    `;
+
+    // Check if mobile (has IPA/APK)
+    if (executor.platforms && (executor.platforms.includes('apk') || executor.platforms.includes('ipa'))) {
+      // Mobile executor: show download buttons for each platform available
+      html += `<div class="download-buttons">`;
+      if (executor.platforms.includes('ipa')) {
+        html += `<button class="download-btn-modal" data-platform="ipa"><i class="fab fa-apple"></i> Download IPA (iOS)</button>`;
+      }
+      if (executor.platforms.includes('apk')) {
+        html += `<button class="download-btn-modal" data-platform="apk"><i class="fab fa-android"></i> Download APK (Android)</button>`;
+      }
+      html += `</div>`;
+    } else {
+      // PC executor: show password field and download button
+      html += `
+        <div class="password-area">
+          <span class="password-label"><i class="fas fa-lock"></i> Executor Password:</span>
+          <span class="password-value" style="background:#03000c; padding:0.3rem 0.8rem; border-radius:30px;">${executor.password}</span>
+        </div>
+        <div class="download-buttons">
+          <button class="download-btn-modal" id="pcDownloadBtn"><i class="fas fa-download"></i> Download Executor (Windows)</button>
+        </div>
+      `;
+    }
+
+    html += `<button class="close-modal"><i class="fas fa-times"></i> Close</button>`;
+    modalContent.innerHTML = html;
+    modal.classList.add('active');
+
+    // Attach event listeners
+    if (executor.platforms && (executor.platforms.includes('apk') || executor.platforms.includes('ipa'))) {
+      const ipaBtn = modalContent.querySelector('[data-platform="ipa"]');
+      const apkBtn = modalContent.querySelector('[data-platform="apk"]');
+      if (ipaBtn) {
+        ipaBtn.addEventListener('click', () => {
+          const url = executor.mobileLinks?.ipa || `https://nebula.cdn/${executor.name.toLowerCase().replace(/\s/g, '_')}.ipa`;
+          triggerDownload(url, `${executor.name}_executor.ipa`);
+        });
+      }
+      if (apkBtn) {
+        apkBtn.addEventListener('click', () => {
+          const url = executor.mobileLinks?.apk || `https://nebula.cdn/${executor.name.toLowerCase().replace(/\s/g, '_')}.apk`;
+          triggerDownload(url, `${executor.name}_executor.apk`);
+        });
+      }
+    } else {
+      const pcBtn = document.getElementById('pcDownloadBtn');
+      if (pcBtn) {
+        pcBtn.addEventListener('click', () => {
+          // Simulate PC executable download with password hint
+          const blob = new Blob([`-- ${executor.name} PC Executor\n-- Password: ${executor.password}\n-- This is a simulated loader. In real version, download the actual executable.\nprint("${executor.name} ready")`], { type: 'application/octet-stream' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `${executor.name.toLowerCase().replace(/\s/g, '_')}_setup.exe`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+          alert(`Download started: ${executor.name} setup. Use password: ${executor.password} to extract/install.`);
+        });
+      }
+    }
+
+    const closeBtn = modalContent.querySelector('.close-modal');
+    closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+    modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
+  }
+
+  function triggerDownload(url, filename) {
+    // Use fetch to simulate or direct window open. For demo, we open in new tab (or use a hidden anchor)
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    alert(`Direct download initiated: ${filename}\nNote: In production, use actual file URLs.`);
+  }
+
+  function renderAlsoLike() {
+    const grid = document.getElementById('likeGrid');
+    grid.innerHTML = '';
+    alsoLike.forEach(item => {
+      const card = document.createElement('div');
+      card.className = 'like-card';
+      card.innerHTML = `
+        <i class="${item.icon} fa-2x" style="color:#c084fc;"></i>
+        <h3 style="margin: 10px 0 5px;">${item.name}</h3>
+        <p style="font-size:0.85rem; color:#bcb0f0;">${item.desc}</p>
+        <span style="color:#a855f7; font-size:0.8rem;">Explore →</span>
+      `;
+      card.addEventListener('click', () => alert(`More info about ${item.name} coming soon.`));
+      grid.appendChild(card);
+    });
+  }
+
+  function scrollToExecutors() {
+    document.getElementById('executorsSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function showFaq() {
+    const modal = document.getElementById('executorModal');
+    const modalContent = document.getElementById('modalContent');
+    modalContent.innerHTML = `
+      <h3><i class="fas fa-users"></i> FAQ & Direct Link Info</h3>
+      <div class="modal-overview"><strong>❓ How do I download mobile executors?</strong> Click IPA/APK buttons — those are direct links to the files.</div>
+      <div class="modal-overview"><strong>🔐 PC executors require password:</strong> Each PC executor has its own password shown in the modal.</div>
+      <div class="modal-overview"><strong>🔗 Creating direct links:</strong> Upload your IPA/APK/EXE to a host (e.g., MediaFire, Google Drive) and get a shareable URL. Replace the demo URLs with real ones.</div>
+      <div class="social-icons" style="display: flex; gap: 1rem; margin: 1rem 0; justify-content:center;">
+        <i class="fab fa-discord fa-2x" style="color:#a855f7; cursor:pointer;" onclick="window.open('https://discord.gg/nebula','_blank')"></i>
+        <i class="fab fa-telegram fa-2x" style="color:#a855f7; cursor:pointer;" onclick="window.open('https://t.me/nebula','_blank')"></i>
+        <i class="fab fa-github fa-2x" style="color:#a855f7; cursor:pointer;" onclick="window.open('https://github.com/nebula','_blank')"></i>
+      </div>
+      <button class="close-modal">Close</button>
+    `;
+    modal.classList.add('active');
+    const closeBtn = modalContent.querySelector('.close-modal');
+    closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+    modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
+  }
+
+  document.getElementById('currentYear').innerText = new Date().getFullYear();
+  document.getElementById('browseBtn').addEventListener('click', scrollToExecutors);
+  document.getElementById('heroBrowseBtn').addEventListener('click', scrollToExecutors);
+  document.getElementById('faqBtn').addEventListener('click', showFaq);
+
+  renderExecutors();
+  renderAlsoLike();
+</script>
+</body>
+</html>
