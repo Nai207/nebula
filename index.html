@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Nebula | Next-Gen Executor Hub</title>
+  <title>Nebula | Executor Hub + Script Hub</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
   <style>
@@ -156,7 +156,125 @@
       border-top: 1px solid #1f1738; margin-top: 2rem;
       font-size: 0.8rem; color: #8a7ebf;
     }
-    .info-badge { font-size: 0.7rem; background: #2d1b2e; padding: 0.1rem 0.5rem; border-radius: 20px; display: inline-block; margin-left: 0.5rem; }
+    /* Script Hub Styles */
+    .script-search-area {
+      background: #0a031c;
+      border-radius: 28px;
+      padding: 1.5rem;
+      margin: 1rem 0 2rem;
+      border: 1px solid #2a1e4a;
+    }
+    .search-bar {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+    .search-input {
+      flex: 1;
+      background: #03000c;
+      border: 1px solid #2a1e4a;
+      border-radius: 60px;
+      padding: 0.8rem 1.2rem;
+      color: white;
+      font-size: 1rem;
+      outline: none;
+    }
+    .search-input:focus {
+      border-color: #a855f7;
+    }
+    .search-btn {
+      background: #7c3aed;
+      border: none;
+      padding: 0.8rem 1.8rem;
+      border-radius: 60px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .filter-verified {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-left: auto;
+    }
+    .filter-verified input {
+      width: 18px;
+      height: 18px;
+      accent-color: #a855f7;
+    }
+    .scripts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .script-card {
+      background: #0d071f;
+      border-radius: 24px;
+      border: 1px solid #2a1e4a;
+      padding: 1.2rem;
+      transition: 0.2s;
+    }
+    .script-card:hover {
+      border-color: #a855f7;
+    }
+    .script-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .script-game {
+      font-size: 0.8rem;
+      color: #c084fc;
+      margin-bottom: 0.8rem;
+    }
+    .script-desc {
+      font-size: 0.85rem;
+      color: #b3a7e6;
+      margin-bottom: 1rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .copy-btn {
+      background: #1f1738;
+      border: 1px solid #a855f7;
+      padding: 0.4rem 1rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: 0.2s;
+      width: 100%;
+    }
+    .copy-btn:hover {
+      background: #7c3aed;
+      color: white;
+    }
+    .loading-spinner {
+      text-align: center;
+      padding: 2rem;
+      color: #c084fc;
+    }
+    .no-results {
+      text-align: center;
+      padding: 2rem;
+      color: #8a7ebf;
+    }
+    @media (max-width: 780px) {
+      .search-bar {
+        flex-direction: column;
+      }
+      .filter-verified {
+        margin-left: 0;
+      }
+    }
   </style>
 </head>
 <body>
@@ -164,8 +282,9 @@
 <div class="navbar">
   <div class="logo"><h1>NEBULA<span> | EXECUTOR HUB</span></h1></div>
   <div class="nav-links">
-    <button class="nav-btn" id="browseBtn"><i class="fas fa-crown"></i> Browse Executors</button>
-    <button class="nav-btn" id="faqBtn"><i class="fas fa-question-circle"></i> FAQ / Info</button>
+    <button class="nav-btn" id="browseBtn"><i class="fas fa-crown"></i> Executors</button>
+    <button class="nav-btn" id="scriptHubBtn"><i class="fas fa-code"></i> Script Hub</button>
+    <button class="nav-btn" id="faqBtn"><i class="fas fa-question-circle"></i> FAQ</button>
   </div>
 </div>
 
@@ -183,9 +302,27 @@
     <div class="adv-card"><i class="fas fa-headset"></i><h3>24/7 Support</h3><p>Dedicated community & help desk.</p></div>
   </div>
 
+  <!-- Executors Section -->
   <div id="executorsSection">
     <div class="section-title"><i class="fas fa-code-branch"></i> Premium Executors Library</div>
     <div class="executor-grid" id="executorGrid"></div>
+  </div>
+
+  <!-- Script Hub Section (initially hidden) -->
+  <div id="scriptHubSection" style="display: none;">
+    <div class="section-title"><i class="fas fa-search"></i> Script Hub · Verified Scripts</div>
+    <div class="script-search-area">
+      <div class="search-bar">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search scripts (e.g., 'blox fruits auto farm')">
+        <button id="searchBtn" class="search-btn"><i class="fas fa-search"></i> Search</button>
+        <label class="filter-verified">
+          <input type="checkbox" id="verifiedOnlyCheckbox" checked> Verified only
+        </label>
+      </div>
+      <div id="scriptsResults" class="scripts-grid">
+        <div class="loading-spinner"><i class="fas fa-spinner fa-pulse"></i> Enter a search term to find verified scripts...</div>
+      </div>
+    </div>
   </div>
 
   <div class="section-title"><i class="fas fa-thumbs-up"></i> You May Also Like</div>
@@ -200,7 +337,7 @@
 <div id="executorModal" class="modal-overlay"><div class="modal-card" id="modalContent"></div></div>
 
 <script>
-  // ----- EXECUTOR DATA (with direct links for Volt, Volcano, Velocity, Potassium, Etheria) -----
+  // ----- UPDATED EXECUTOR DATA (removed Script-Ware and Solara, added new links) -----
   const executors = [
     // SPONSORED
     { 
@@ -211,17 +348,15 @@
       password: "syntax2025",
       sponsored: true,
       cracked: false,
-      pcLink: null  // no direct link yet
+      pcLink: null
     },
-    // PC EXECUTORS (all cracked / encrypted)
-    { name: "Script-Ware", rating: "4.9 ★", downloads: "198K", status: "Cracked", description: "Premium level executor, robust API. Cracked version.", overview: "Script-Ware is industry standard, full LuaU support. This is a cracked, encrypted version that requires password.", platforms: ["pc"], password: "sware_cracked", cracked: true, pcLink: null },
-    { name: "Solara", rating: "4.9 ★", downloads: "95K", status: "Cracked", description: "Modern UI, instant script execution. Cracked release.", overview: "Solara is next-gen with auto-update. This cracked version is encrypted for safety.", platforms: ["pc"], password: "solar_crack", cracked: true, pcLink: null },
+    // PC EXECUTORS (cracked with direct links)
     { name: "Wave Executor", rating: "4.7 ★", downloads: "47.3K", status: "Cracked", description: "Wave execution engine, low resource usage. Cracked.", overview: "Wave uses unique obfuscation. The cracked version is password-protected.", platforms: ["pc"], password: "wave_cracked", cracked: true, pcLink: null },
-    { name: "Velocity Executor", rating: "4.8 ★", downloads: "63K", status: "Cracked", description: "Velocity core with speed optimization. Cracked/encrypted.", overview: "Velocity offers high performance. This is a cracked, encrypted copy.", platforms: ["pc"], password: "velocity_crack", cracked: true, pcLink: "https://files.catbox.moe/tzvd1l.zip" },
-    { name: "Potassium Executor", rating: "4.6 ★", downloads: "12K", status: "Cracked", description: "Lightweight executor with clean interface. Cracked.", overview: "Potassium focuses on stability. Cracked version with encryption.", platforms: ["pc"], password: "potassium_crack", cracked: true, pcLink: "https://files.catbox.moe/nu7nwm.zip" },
-    { name: "Volcano Executor", rating: "4.7 ★", downloads: "8.5K", status: "Cracked", description: "Hot performance, cool UI. Cracked release.", overview: "Volcano delivers powerful execution. This is a cracked, password-protected build.", platforms: ["pc"], password: "volcano_crack", cracked: true, pcLink: "https://files.catbox.moe/brfutk.zip" },
-    { name: "Etheria Executor", rating: "4.8 ★", downloads: "21K", status: "Cracked", description: "Ethereal execution experience. Cracked.", overview: "Etheria combines elegance with power. Cracked version encrypted.", platforms: ["pc"], password: "etheria_crack", cracked: true, pcLink: "https://files.catbox.moe/r8y7qn.zip" },
-    { name: "Volt", rating: "4.7 ★", downloads: "40K", status: "Cracked", description: "Volt lightweight executor, clean. Cracked.", overview: "Volt focuses on simplicity. This cracked version is encrypted.", platforms: ["pc"], password: "volt_crack", cracked: true, pcLink: "https://files.catbox.moe/qbhc4q.zip" },
+    { name: "Velocity Executor", rating: "4.8 ★", downloads: "63K", status: "Cracked", description: "Velocity core with speed optimization. Cracked/encrypted.", overview: "Velocity offers high performance. This is a cracked, encrypted copy.", platforms: ["pc"], password: "velocity_crack", cracked: true, pcLink: "https://files.catbox.moe/bd4zlz.zip" },
+    { name: "Potassium Executor", rating: "4.6 ★", downloads: "12K", status: "Cracked", description: "Lightweight executor with clean interface. Cracked.", overview: "Potassium focuses on stability. Cracked version with encryption.", platforms: ["pc"], password: "potassium_crack", cracked: true, pcLink: "https://files.catbox.moe/suwrtd.zip" },
+    { name: "Volcano Executor", rating: "4.7 ★", downloads: "8.5K", status: "Cracked", description: "Hot performance, cool UI. Cracked release.", overview: "Volcano delivers powerful execution. This is a cracked, password-protected build.", platforms: ["pc"], password: "volcano_crack", cracked: true, pcLink: "https://files.catbox.moe/19bymi.zip" },
+    { name: "Etheria Executor", rating: "4.8 ★", downloads: "21K", status: "Cracked", description: "Ethereal execution experience. Cracked.", overview: "Etheria combines elegance with power. Cracked version encrypted.", platforms: ["pc"], password: "etheria_crack", cracked: true, pcLink: "https://files.catbox.moe/365wfo.zip" },
+    { name: "Volt", rating: "4.7 ★", downloads: "40K", status: "Cracked", description: "Volt lightweight executor, clean. Cracked.", overview: "Volt focuses on simplicity. This cracked version is encrypted.", platforms: ["pc"], password: "volt_crack", cracked: true, pcLink: "https://files.catbox.moe/iqmmpb.zip" },
     // MOBILE EXECUTORS (unchanged)
     { 
       name: "Delta Executor", rating: "4.9 ★", downloads: "41K", status: "Active", 
@@ -260,6 +395,7 @@
     { name: "Arsenal Aimbot", icon: "fas fa-crosshairs", desc: "Silent aim, triggerbot, ESP" }
   ];
 
+  // ---------- Executor UI ----------
   function renderExecutors() {
     const grid = document.getElementById('executorGrid');
     grid.innerHTML = '';
@@ -355,10 +491,9 @@
       if (pcBtn) {
         pcBtn.addEventListener('click', () => {
           if (executor.pcLink) {
-            // Direct download link provided – trigger without opening new tab
             triggerDirectDownload(executor.pcLink);
           } else {
-            // Fallback to simulated download
+            // Fallback for executors without direct link
             const blob = new Blob([`-- ${executor.name} PC Executor (Cracked/Encrypted)\n-- Password: ${executor.password}\n-- This is a placeholder. Replace with actual executable.\nprint("${executor.name} ready")`], { type: 'application/octet-stream' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -379,7 +514,6 @@
     modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
   }
 
-  // Function to trigger direct download without opening a new tab
   function triggerDirectDownload(url) {
     const a = document.createElement('a');
     a.href = url;
@@ -400,6 +534,127 @@
     alert(`Direct download initiated: ${filename}\nNote: In production, use actual file URLs.`);
   }
 
+  // ---------- Script Hub ----------
+  let currentSearchQuery = '';
+  let currentVerifiedOnly = true;
+
+  async function searchScripts(query) {
+    if (!query.trim()) {
+      document.getElementById('scriptsResults').innerHTML = '<div class="no-results"><i class="fas fa-info-circle"></i> Enter a search term to find verified scripts...</div>';
+      return;
+    }
+
+    document.getElementById('scriptsResults').innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-pulse"></i> Loading scripts from scriptblox...</div>';
+
+    try {
+      // Use a CORS proxy to avoid CORS issues (scriptblox doesn't set CORS headers)
+      const apiUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://scriptblox.com/api/scripts?q=${encodeURIComponent(query)}`)}`;
+      const response = await fetch(apiUrl);
+      if (!response.ok) throw new Error('Failed to fetch');
+      const data = await response.json();
+      
+      let scripts = data.scripts || [];
+      
+      // Filter verified only if checkbox is checked
+      if (currentVerifiedOnly) {
+        scripts = scripts.filter(script => script.verified === true);
+      }
+      
+      if (scripts.length === 0) {
+        document.getElementById('scriptsResults').innerHTML = '<div class="no-results"><i class="fas fa-frown"></i> No verified scripts found for "' + query + '"</div>';
+        return;
+      }
+      
+      renderScripts(scripts);
+    } catch (error) {
+      console.error(error);
+      document.getElementById('scriptsResults').innerHTML = '<div class="no-results"><i class="fas fa-exclamation-triangle"></i> Error fetching scripts. Please try again later.</div>';
+    }
+  }
+
+  function renderScripts(scripts) {
+    const container = document.getElementById('scriptsResults');
+    container.innerHTML = '';
+    scripts.forEach(script => {
+      const card = document.createElement('div');
+      card.className = 'script-card';
+      card.innerHTML = `
+        <div class="script-title">
+          <span>${escapeHtml(script.title || 'Untitled')}</span>
+          ${script.verified ? '<i class="fas fa-check-circle" style="color:#10b981;" title="Verified"></i>' : ''}
+        </div>
+        <div class="script-game"><i class="fas fa-gamepad"></i> ${escapeHtml(script.game || 'Unknown game')}</div>
+        <div class="script-desc">${escapeHtml(script.description || 'No description available.')}</div>
+        <button class="copy-btn" data-script="${escapeHtml(script.script || '')}"><i class="fas fa-copy"></i> Copy Script</button>
+      `;
+      container.appendChild(card);
+    });
+
+    // Attach copy handlers
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const scriptContent = btn.getAttribute('data-script');
+        if (scriptContent) {
+          navigator.clipboard.writeText(scriptContent).then(() => {
+            btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy"></i> Copy Script'; }, 2000);
+          }).catch(() => {
+            alert('Failed to copy script');
+          });
+        } else {
+          alert('No script content available');
+        }
+      });
+    });
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+
+  // ---------- UI Navigation ----------
+  function showExecutors() {
+    document.getElementById('executorsSection').style.display = 'block';
+    document.getElementById('scriptHubSection').style.display = 'none';
+  }
+
+  function showScriptHub() {
+    document.getElementById('executorsSection').style.display = 'none';
+    document.getElementById('scriptHubSection').style.display = 'block';
+    // Optionally trigger a search if there's already a query
+    if (currentSearchQuery) {
+      searchScripts(currentSearchQuery);
+    }
+  }
+
+  function scrollToExecutors() {
+    showExecutors();
+    document.getElementById('executorsSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function showFaq() {
+    const modal = document.getElementById('executorModal');
+    const modalContent = document.getElementById('modalContent');
+    modalContent.innerHTML = `
+      <h3><i class="fas fa-question-circle"></i> Frequently Asked Questions</h3>
+      <div class="modal-overview"><strong>❓ How do I download mobile executors?</strong><br>Click the IPA (iOS) or APK (Android) button in the executor modal. The file will download directly.</div>
+      <div class="modal-overview"><strong>🔐 PC executors (cracked) require a password.</strong><br>Each cracked executor has its own password shown in the modal. These are encrypted files; use the provided password to extract/install.</div>
+      <div class="modal-overview"><strong>🛡️ Are these executors safe?</strong><br>All executors listed are community-tested and regularly updated. Use at your own discretion.</div>
+      <div class="modal-overview"><strong>📜 Script Hub</strong><br>Searches scriptblox.com for scripts. Only verified scripts are shown by default (toggle off to see all).</div>
+      <button class="close-modal">Close</button>
+    `;
+    modal.classList.add('active');
+    const closeBtn = modalContent.querySelector('.close-modal');
+    closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+    modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
+  }
+
   function renderAlsoLike() {
     const grid = document.getElementById('likeGrid');
     grid.innerHTML = '';
@@ -417,33 +672,42 @@
     });
   }
 
-  function scrollToExecutors() {
-    document.getElementById('executorsSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  function showFaq() {
-    const modal = document.getElementById('executorModal');
-    const modalContent = document.getElementById('modalContent');
-    modalContent.innerHTML = `
-      <h3><i class="fas fa-question-circle"></i> Frequently Asked Questions</h3>
-      <div class="modal-overview"><strong>❓ How do I download mobile executors?</strong><br>Click the IPA (iOS) or APK (Android) button in the executor modal. The file will download directly.</div>
-      <div class="modal-overview"><strong>🔐 PC executors (cracked) require a password.</strong><br>Each cracked executor has its own password shown in the modal. These are encrypted files; use the provided password to extract/install.</div>
-      <div class="modal-overview"><strong>🛡️ Are these executors safe?</strong><br>All executors listed are community-tested and regularly updated. Use at your own discretion.</div>
-      <button class="close-modal">Close</button>
-    `;
-    modal.classList.add('active');
-    const closeBtn = modalContent.querySelector('.close-modal');
-    closeBtn.addEventListener('click', () => modal.classList.remove('active'));
-    modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
-  }
-
+  // Event Listeners
   document.getElementById('currentYear').innerText = new Date().getFullYear();
   document.getElementById('browseBtn').addEventListener('click', scrollToExecutors);
   document.getElementById('heroBrowseBtn').addEventListener('click', scrollToExecutors);
+  document.getElementById('scriptHubBtn').addEventListener('click', showScriptHub);
   document.getElementById('faqBtn').addEventListener('click', showFaq);
+  
+  const searchBtn = document.getElementById('searchBtn');
+  const searchInput = document.getElementById('searchInput');
+  const verifiedCheckbox = document.getElementById('verifiedOnlyCheckbox');
+
+  searchBtn.addEventListener('click', () => {
+    currentSearchQuery = searchInput.value.trim();
+    currentVerifiedOnly = verifiedCheckbox.checked;
+    searchScripts(currentSearchQuery);
+  });
+
+  searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      currentSearchQuery = searchInput.value.trim();
+      currentVerifiedOnly = verifiedCheckbox.checked;
+      searchScripts(currentSearchQuery);
+    }
+  });
+
+  verifiedCheckbox.addEventListener('change', () => {
+    if (currentSearchQuery) {
+      currentVerifiedOnly = verifiedCheckbox.checked;
+      searchScripts(currentSearchQuery);
+    }
+  });
 
   renderExecutors();
   renderAlsoLike();
+  // Initially show executors, script hub hidden
+  showExecutors();
 </script>
 </body>
 </html>
