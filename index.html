@@ -169,6 +169,7 @@
       gap: 1rem;
       flex-wrap: wrap;
       margin-bottom: 1rem;
+      align-items: center;
     }
     .search-input {
       flex: 1;
@@ -194,16 +195,23 @@
       align-items: center;
       gap: 8px;
     }
-    .filter-verified {
+    .quick-buttons {
       display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-left: auto;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
     }
-    .filter-verified input {
-      width: 18px;
-      height: 18px;
-      accent-color: #a855f7;
+    .quick-btn {
+      background: #1f1738;
+      border: 1px solid #a855f7;
+      padding: 0.4rem 1rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .quick-btn:hover {
+      background: #7c3aed;
     }
     .scripts-grid {
       display: grid;
@@ -271,9 +279,6 @@
       .search-bar {
         flex-direction: column;
       }
-      .filter-verified {
-        margin-left: 0;
-      }
     }
   </style>
 </head>
@@ -310,17 +315,23 @@
 
   <!-- Script Hub Section (initially hidden) -->
   <div id="scriptHubSection" style="display: none;">
-    <div class="section-title"><i class="fas fa-search"></i> Script Hub · Verified Scripts</div>
+    <div class="section-title"><i class="fas fa-search"></i> Script Hub · Search Roblox Scripts</div>
     <div class="script-search-area">
       <div class="search-bar">
         <input type="text" id="searchInput" class="search-input" placeholder="Search scripts (e.g., 'blox fruits auto farm')">
         <button id="searchBtn" class="search-btn"><i class="fas fa-search"></i> Search</button>
-        <label class="filter-verified">
-          <input type="checkbox" id="verifiedOnlyCheckbox" checked> Verified only
-        </label>
+      </div>
+      <div class="quick-buttons">
+        <span style="color:#c084fc;">Popular games:</span>
+        <button class="quick-btn" data-query="Blox Fruits">🍎 Blox Fruits</button>
+        <button class="quick-btn" data-query="Pet Simulator 99">🐾 Pet Simulator 99</button>
+        <button class="quick-btn" data-query="Anime Adventures">⚡ Anime Adventures</button>
+        <button class="quick-btn" data-query="King Legacy">👑 King Legacy</button>
+        <button class="quick-btn" data-query="Arsenal">🔫 Arsenal</button>
+        <button class="quick-btn" data-query="Doors">🚪 Doors</button>
       </div>
       <div id="scriptsResults" class="scripts-grid">
-        <div class="loading-spinner"><i class="fas fa-spinner fa-pulse"></i> Enter a search term to find verified scripts...</div>
+        <div class="loading-spinner"><i class="fas fa-spinner fa-pulse"></i> Loading scripts for Blox Fruits...</div>
       </div>
     </div>
   </div>
@@ -337,27 +348,26 @@
 <div id="executorModal" class="modal-overlay"><div class="modal-card" id="modalContent"></div></div>
 
 <script>
-  // ----- UPDATED EXECUTOR DATA (removed Script-Ware and Solara, added new links) -----
+  // ----- UPDATED EXECUTOR DATA (removed Wave, Syntax is now regular, no sponsored) -----
   const executors = [
-    // SPONSORED
+    // Syntax is now a regular executor (active, no sponsored badge)
     { 
-      name: "Syntax", rating: "5.0 ★", downloads: "N/A", status: "Sponsored",
+      name: "Syntax", rating: "5.0 ★", downloads: "N/A", status: "Active",
       description: "The new generation executor — lightning fast, stable, and completely undetected.",
-      overview: "Syntax is the latest breakthrough in Roblox execution, offering unmatched stability, a sleek UI, and built-in script hub. Sponsored by Nebula.",
+      overview: "Syntax is the latest breakthrough in Roblox execution, offering unmatched stability, a sleek UI, and built-in script hub.",
       platforms: ["pc"],
       password: "syntax2025",
-      sponsored: true,
+      sponsored: false,
       cracked: false,
       pcLink: null
     },
     // PC EXECUTORS (cracked with direct links)
-    { name: "Wave Executor", rating: "4.7 ★", downloads: "47.3K", status: "Cracked", description: "Wave execution engine, low resource usage. Cracked.", overview: "Wave uses unique obfuscation. The cracked version is password-protected.", platforms: ["pc"], password: "wave_cracked", cracked: true, pcLink: null },
     { name: "Velocity Executor", rating: "4.8 ★", downloads: "63K", status: "Cracked", description: "Velocity core with speed optimization. Cracked/encrypted.", overview: "Velocity offers high performance. This is a cracked, encrypted copy.", platforms: ["pc"], password: "velocity_crack", cracked: true, pcLink: "https://files.catbox.moe/bd4zlz.zip" },
     { name: "Potassium Executor", rating: "4.6 ★", downloads: "12K", status: "Cracked", description: "Lightweight executor with clean interface. Cracked.", overview: "Potassium focuses on stability. Cracked version with encryption.", platforms: ["pc"], password: "potassium_crack", cracked: true, pcLink: "https://files.catbox.moe/suwrtd.zip" },
     { name: "Volcano Executor", rating: "4.7 ★", downloads: "8.5K", status: "Cracked", description: "Hot performance, cool UI. Cracked release.", overview: "Volcano delivers powerful execution. This is a cracked, password-protected build.", platforms: ["pc"], password: "volcano_crack", cracked: true, pcLink: "https://files.catbox.moe/19bymi.zip" },
     { name: "Etheria Executor", rating: "4.8 ★", downloads: "21K", status: "Cracked", description: "Ethereal execution experience. Cracked.", overview: "Etheria combines elegance with power. Cracked version encrypted.", platforms: ["pc"], password: "etheria_crack", cracked: true, pcLink: "https://files.catbox.moe/365wfo.zip" },
     { name: "Volt", rating: "4.7 ★", downloads: "40K", status: "Cracked", description: "Volt lightweight executor, clean. Cracked.", overview: "Volt focuses on simplicity. This cracked version is encrypted.", platforms: ["pc"], password: "volt_crack", cracked: true, pcLink: "https://files.catbox.moe/iqmmpb.zip" },
-    // MOBILE EXECUTORS (unchanged)
+    // MOBILE EXECUTORS
     { 
       name: "Delta Executor", rating: "4.9 ★", downloads: "41K", status: "Active", 
       description: "Powerful executor with clean GUI, supports all scripts.",
@@ -493,17 +503,17 @@
           if (executor.pcLink) {
             triggerDirectDownload(executor.pcLink);
           } else {
-            // Fallback for executors without direct link
-            const blob = new Blob([`-- ${executor.name} PC Executor (Cracked/Encrypted)\n-- Password: ${executor.password}\n-- This is a placeholder. Replace with actual executable.\nprint("${executor.name} ready")`], { type: 'application/octet-stream' });
+            // Fallback for executors without direct link (Syntax)
+            const blob = new Blob([`-- ${executor.name} PC Executor\n-- Password: ${executor.password}\n-- This is a placeholder. Replace with actual executable.\nprint("${executor.name} ready")`], { type: 'application/octet-stream' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `${executor.name.toLowerCase().replace(/\s/g, '_')}_cracked.exe`;
+            a.download = `${executor.name.toLowerCase().replace(/\s/g, '_')}_setup.exe`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
-            alert(`Download started: ${executor.name} setup. Use password: ${executor.password} to extract/install. (Cracked version)`);
+            alert(`Download started: ${executor.name} setup. Use password: ${executor.password} to extract/install.`);
           }
         });
       }
@@ -534,41 +544,35 @@
     alert(`Direct download initiated: ${filename}\nNote: In production, use actual file URLs.`);
   }
 
-  // ---------- Script Hub ----------
+  // ---------- Script Hub (no verified filter, all scripts) ----------
   let currentSearchQuery = '';
-  let currentVerifiedOnly = true;
 
   async function searchScripts(query) {
     if (!query.trim()) {
-      document.getElementById('scriptsResults').innerHTML = '<div class="no-results"><i class="fas fa-info-circle"></i> Enter a search term to find verified scripts...</div>';
+      document.getElementById('scriptsResults').innerHTML = '<div class="no-results"><i class="fas fa-info-circle"></i> Enter a search term to find scripts...</div>';
       return;
     }
 
-    document.getElementById('scriptsResults').innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-pulse"></i> Loading scripts from scriptblox...</div>';
+    document.getElementById('scriptsResults').innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-pulse"></i> Loading scripts for "' + escapeHtml(query) + '"...</div>';
 
     try {
-      // Use a CORS proxy to avoid CORS issues (scriptblox doesn't set CORS headers)
-      const apiUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(`https://scriptblox.com/api/scripts?q=${encodeURIComponent(query)}`)}`;
-      const response = await fetch(apiUrl);
-      if (!response.ok) throw new Error('Failed to fetch');
+      const proxyUrl = 'https://api.allorigins.win/raw?url=';
+      const apiUrl = `https://scriptblox.com/api/scripts?q=${encodeURIComponent(query)}`;
+      const response = await fetch(proxyUrl + encodeURIComponent(apiUrl));
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const data = await response.json();
       
       let scripts = data.scripts || [];
       
-      // Filter verified only if checkbox is checked
-      if (currentVerifiedOnly) {
-        scripts = scripts.filter(script => script.verified === true);
-      }
-      
       if (scripts.length === 0) {
-        document.getElementById('scriptsResults').innerHTML = '<div class="no-results"><i class="fas fa-frown"></i> No verified scripts found for "' + query + '"</div>';
+        document.getElementById('scriptsResults').innerHTML = '<div class="no-results"><i class="fas fa-frown"></i> No scripts found for "' + escapeHtml(query) + '". Try another game or term.</div>';
         return;
       }
       
       renderScripts(scripts);
     } catch (error) {
       console.error(error);
-      document.getElementById('scriptsResults').innerHTML = '<div class="no-results"><i class="fas fa-exclamation-triangle"></i> Error fetching scripts. Please try again later.</div>';
+      document.getElementById('scriptsResults').innerHTML = '<div class="no-results"><i class="fas fa-exclamation-triangle"></i> Failed to fetch scripts. Please try again later.</div>';
     }
   }
 
@@ -590,7 +594,6 @@
       container.appendChild(card);
     });
 
-    // Attach copy handlers
     document.querySelectorAll('.copy-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const scriptContent = btn.getAttribute('data-script');
@@ -627,8 +630,11 @@
   function showScriptHub() {
     document.getElementById('executorsSection').style.display = 'none';
     document.getElementById('scriptHubSection').style.display = 'block';
-    // Optionally trigger a search if there's already a query
     if (currentSearchQuery) {
+      searchScripts(currentSearchQuery);
+    } else {
+      currentSearchQuery = 'Blox Fruits';
+      document.getElementById('searchInput').value = currentSearchQuery;
       searchScripts(currentSearchQuery);
     }
   }
@@ -646,7 +652,7 @@
       <div class="modal-overview"><strong>❓ How do I download mobile executors?</strong><br>Click the IPA (iOS) or APK (Android) button in the executor modal. The file will download directly.</div>
       <div class="modal-overview"><strong>🔐 PC executors (cracked) require a password.</strong><br>Each cracked executor has its own password shown in the modal. These are encrypted files; use the provided password to extract/install.</div>
       <div class="modal-overview"><strong>🛡️ Are these executors safe?</strong><br>All executors listed are community-tested and regularly updated. Use at your own discretion.</div>
-      <div class="modal-overview"><strong>📜 Script Hub</strong><br>Searches scriptblox.com for scripts. Only verified scripts are shown by default (toggle off to see all).</div>
+      <div class="modal-overview"><strong>📜 Script Hub</strong><br>Searches scriptblox.com for scripts. Use the search bar or click one of the popular game buttons.</div>
       <button class="close-modal">Close</button>
     `;
     modal.classList.add('active');
@@ -681,32 +687,30 @@
   
   const searchBtn = document.getElementById('searchBtn');
   const searchInput = document.getElementById('searchInput');
-  const verifiedCheckbox = document.getElementById('verifiedOnlyCheckbox');
 
   searchBtn.addEventListener('click', () => {
     currentSearchQuery = searchInput.value.trim();
-    currentVerifiedOnly = verifiedCheckbox.checked;
     searchScripts(currentSearchQuery);
   });
 
   searchInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
       currentSearchQuery = searchInput.value.trim();
-      currentVerifiedOnly = verifiedCheckbox.checked;
       searchScripts(currentSearchQuery);
     }
   });
 
-  verifiedCheckbox.addEventListener('change', () => {
-    if (currentSearchQuery) {
-      currentVerifiedOnly = verifiedCheckbox.checked;
-      searchScripts(currentSearchQuery);
-    }
+  document.querySelectorAll('.quick-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const query = btn.getAttribute('data-query');
+      searchInput.value = query;
+      currentSearchQuery = query;
+      searchScripts(query);
+    });
   });
 
   renderExecutors();
   renderAlsoLike();
-  // Initially show executors, script hub hidden
   showExecutors();
 </script>
 </body>
