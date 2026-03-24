@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
   <style>
+    /* (Same styles as before – omitted for brevity, but include all previous CSS) */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background: #05010f; font-family: 'Inter', sans-serif; color: #edeaff; scroll-behavior: smooth; }
     :root {
@@ -116,6 +117,7 @@
     .executor-stats { display: flex; gap: 1rem; font-size: 0.8rem; margin-top: 1rem; color: #b9b0e6; flex-wrap: wrap; }
     .status-badge { background: #10b98120; color: #6ee7b7; border-radius: 40px; padding: 0.2rem 0.7rem; font-size: 0.7rem; }
     .cracked-status { background: #f9731620; color: #fdba74; }
+    .inactive-status { background: #6b728020; color: #9ca3af; }
     .modal-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px);
@@ -156,7 +158,6 @@
       border-top: 1px solid #1f1738; margin-top: 2rem;
       font-size: 0.8rem; color: #8a7ebf;
     }
-    /* Script Hub Styles */
     .script-search-area {
       background: #0a031c;
       border-radius: 28px;
@@ -348,26 +349,24 @@
 <div id="executorModal" class="modal-overlay"><div class="modal-card" id="modalContent"></div></div>
 
 <script>
-  // ----- UPDATED EXECUTOR DATA (removed Wave, Syntax is now regular, no sponsored) -----
+  // ----- EXECUTOR DATA (same as final, with pixeldrain links) -----
   const executors = [
-    // Syntax is now a regular executor (active, no sponsored badge)
     { 
-      name: "Syntax", rating: "5.0 ★", downloads: "N/A", status: "Active",
-      description: "The new generation executor — lightning fast, stable, and completely undetected.",
-      overview: "Syntax is the latest breakthrough in Roblox execution, offering unmatched stability, a sleek UI, and built-in script hub.",
+      name: "Syntax", rating: "5.0 ★", downloads: "N/A", status: "Inactive – Updating Soon",
+      description: "The new generation executor — lightning fast, stable, and completely undetected. Currently being updated for the latest Roblox patch.",
+      overview: "Syntax is the latest breakthrough in Roblox execution, offering unmatched stability, a sleek UI, and built-in script hub. This version is currently under maintenance and will be available again shortly.",
       platforms: ["pc"],
       password: "syntax2025",
-      sponsored: false,
+      sponsored: true,
       cracked: false,
-      pcLink: null
+      pcLink: null,
+      inactive: true
     },
-    // PC EXECUTORS (cracked with direct links)
-    { name: "Velocity Executor", rating: "4.8 ★", downloads: "63K", status: "Cracked", description: "Velocity core with speed optimization. Cracked/encrypted.", overview: "Velocity offers high performance. This is a cracked, encrypted copy.", platforms: ["pc"], password: "velocity_crack", cracked: true, pcLink: "https://files.catbox.moe/bd4zlz.zip" },
-    { name: "Potassium Executor", rating: "4.6 ★", downloads: "12K", status: "Cracked", description: "Lightweight executor with clean interface. Cracked.", overview: "Potassium focuses on stability. Cracked version with encryption.", platforms: ["pc"], password: "potassium_crack", cracked: true, pcLink: "https://files.catbox.moe/suwrtd.zip" },
-    { name: "Volcano Executor", rating: "4.7 ★", downloads: "8.5K", status: "Cracked", description: "Hot performance, cool UI. Cracked release.", overview: "Volcano delivers powerful execution. This is a cracked, password-protected build.", platforms: ["pc"], password: "volcano_crack", cracked: true, pcLink: "https://files.catbox.moe/19bymi.zip" },
-    { name: "Etheria Executor", rating: "4.8 ★", downloads: "21K", status: "Cracked", description: "Ethereal execution experience. Cracked.", overview: "Etheria combines elegance with power. Cracked version encrypted.", platforms: ["pc"], password: "etheria_crack", cracked: true, pcLink: "https://files.catbox.moe/365wfo.zip" },
-    { name: "Volt", rating: "4.7 ★", downloads: "40K", status: "Cracked", description: "Volt lightweight executor, clean. Cracked.", overview: "Volt focuses on simplicity. This cracked version is encrypted.", platforms: ["pc"], password: "volt_crack", cracked: true, pcLink: "https://files.catbox.moe/iqmmpb.zip" },
-    // MOBILE EXECUTORS
+    { name: "Velocity Executor", rating: "4.8 ★", downloads: "63K", status: "Cracked", description: "Velocity core with speed optimization. Cracked/encrypted.", overview: "Velocity offers high performance. This is a cracked, encrypted copy.", platforms: ["pc"], password: "velocity_crack", cracked: true, pcLink: "https://pixeldrain.com/api/file/Cs5muMwW" },
+    { name: "Potassium Executor", rating: "4.6 ★", downloads: "12K", status: "Cracked", description: "Lightweight executor with clean interface. Cracked.", overview: "Potassium focuses on stability. Cracked version with encryption.", platforms: ["pc"], password: "potassium_crack", cracked: true, pcLink: "https://pixeldrain.com/api/file/WckmyQrw" },
+    { name: "Volcano Executor", rating: "4.7 ★", downloads: "8.5K", status: "Cracked", description: "Hot performance, cool UI. Cracked release.", overview: "Volcano delivers powerful execution. This is a cracked, password-protected build.", platforms: ["pc"], password: "volcano_crack", cracked: true, pcLink: "https://pixeldrain.com/api/file/jhFvknNt" },
+    { name: "Etheria Executor", rating: "4.8 ★", downloads: "21K", status: "Cracked", description: "Ethereal execution experience. Cracked.", overview: "Etheria combines elegance with power. Cracked version encrypted.", platforms: ["pc"], password: "etheria_crack", cracked: true, pcLink: "https://pixeldrain.com/api/file/9yD32QS9" },
+    { name: "Volt", rating: "4.7 ★", downloads: "40K", status: "Cracked", description: "Volt lightweight executor, clean. Cracked.", overview: "Volt focuses on simplicity. This cracked version is encrypted.", platforms: ["pc"], password: "volt_crack", cracked: true, pcLink: "https://pixeldrain.com/api/file/kJUiruSE" },
     { 
       name: "Delta Executor", rating: "4.9 ★", downloads: "41K", status: "Active", 
       description: "Powerful executor with clean GUI, supports all scripts.",
@@ -415,7 +414,7 @@
       card.setAttribute('data-index', idx);
       let sponsoredHtml = ex.sponsored ? `<span class="sponsored-badge"><i class="fas fa-crown"></i> SPONSORED</span>` : '';
       let crackedHtml = ex.cracked ? `<span class="cracked-badge"><i class="fas fa-lock"></i> CRACKED / ENCRYPTED</span>` : '';
-      let statusClass = ex.cracked ? "cracked-status" : "";
+      let statusClass = ex.cracked ? "cracked-status" : (ex.inactive ? "inactive-status" : "");
       card.innerHTML = `
         <div class="executor-name">${ex.name} ${sponsoredHtml} ${crackedHtml} <span class="executor-rating">${ex.rating}</span></div>
         <div class="executor-desc">${ex.description}</div>
@@ -465,6 +464,9 @@
       html += `</div>`;
     } else {
       let extraNote = executor.cracked ? '<div class="modal-overview"><i class="fas fa-exclamation-triangle"></i> This is a cracked version and is encrypted. Use the password below to extract/install.</div>' : '';
+      if (executor.inactive) {
+        extraNote += '<div class="modal-overview"><i class="fas fa-clock"></i> This executor is currently inactive and undergoing updates. Download is unavailable until further notice.</div>';
+      }
       html += extraNote;
       html += `
         <div class="password-area">
@@ -472,7 +474,7 @@
           <span class="password-value" style="background:#03000c; padding:0.3rem 0.8rem; border-radius:30px;">${executor.password}</span>
         </div>
         <div class="download-buttons">
-          <button class="download-btn-modal" id="pcDownloadBtn"><i class="fas fa-download"></i> Download Executor (Windows)</button>
+          <button class="download-btn-modal" id="pcDownloadBtn"><i class="fas fa-download"></i> ${executor.inactive ? 'Unavailable – Updating' : 'Download Executor (Windows)'}</button>
         </div>
       `;
     }
@@ -498,13 +500,12 @@
       }
     } else {
       const pcBtn = document.getElementById('pcDownloadBtn');
-      if (pcBtn) {
+      if (pcBtn && !executor.inactive) {
         pcBtn.addEventListener('click', () => {
           if (executor.pcLink) {
             triggerDirectDownload(executor.pcLink);
           } else {
-            // Fallback for executors without direct link (Syntax)
-            const blob = new Blob([`-- ${executor.name} PC Executor\n-- Password: ${executor.password}\n-- This is a placeholder. Replace with actual executable.\nprint("${executor.name} ready")`], { type: 'application/octet-stream' });
+            const blob = new Blob([`-- ${executor.name} PC Executor\n-- Password: ${executor.password}\n-- This is a placeholder.`], { type: 'application/octet-stream' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
@@ -516,6 +517,10 @@
             alert(`Download started: ${executor.name} setup. Use password: ${executor.password} to extract/install.`);
           }
         });
+      } else if (pcBtn && executor.inactive) {
+        pcBtn.disabled = true;
+        pcBtn.style.opacity = '0.6';
+        pcBtn.style.cursor = 'not-allowed';
       }
     }
 
@@ -544,8 +549,37 @@
     alert(`Direct download initiated: ${filename}\nNote: In production, use actual file URLs.`);
   }
 
-  // ---------- Script Hub (no verified filter, all scripts) ----------
+  // ---------- Script Hub (with fallback) ----------
   let currentSearchQuery = '';
+
+  // Fallback scripts in case the API fails
+  const fallbackScripts = {
+    "Blox Fruits": [
+      { title: "Auto Farm GUI", game: "Blox Fruits", description: "Automatically farm NPCs, collect drops, and level up.", script: "loadstring(game:HttpGet('https://example.com/bloxfruits_autofarm.lua'))()" },
+      { title: "Fruit Finder ESP", game: "Blox Fruits", description: "Highlights fruits, chests, and raid bosses on screen.", script: "loadstring(game:HttpGet('https://example.com/bloxfruits_esp.lua'))()" },
+      { title: "Mastery & Stats Hub", game: "Blox Fruits", description: "Auto mastery, stats distribution, and fruit notifier.", script: "loadstring(game:HttpGet('https://example.com/bloxfruits_mastery.lua'))()" }
+    ],
+    "Pet Simulator 99": [
+      { title: "Auto Farm & Open Eggs", game: "Pet Simulator 99", description: "Auto farm coins, open eggs, and hatch pets.", script: "loadstring(game:HttpGet('https://example.com/petsim99_auto.lua'))()" },
+      { title: "Teleport & Collect", game: "Pet Simulator 99", description: "Teleports to diamonds, coins, and rare chests.", script: "loadstring(game:HttpGet('https://example.com/petsim99_teleport.lua'))()" }
+    ],
+    "Anime Adventures": [
+      { title: "Auto Battle & Farm", game: "Anime Adventures", description: "Auto deploy units, farm gems, and replay stages.", script: "loadstring(game:HttpGet('https://example.com/animeadventures_auto.lua'))()" },
+      { title: "Summon Simulator", game: "Anime Adventures", description: "Auto summon and infinite rerolls.", script: "loadstring(game:HttpGet('https://example.com/animeadventures_summon.lua'))()" }
+    ],
+    "King Legacy": [
+      { title: "Auto Farm & Fruit Sniper", game: "King Legacy", description: "Auto farm bosses, collect fruits, and level up.", script: "loadstring(game:HttpGet('https://example.com/kinglegacy_farm.lua'))()" },
+      { title: "Fruit Notifier & ESP", game: "King Legacy", description: "Notifies and highlights fruits on map.", script: "loadstring(game:HttpGet('https://example.com/kinglegacy_esp.lua'))()" }
+    ],
+    "Arsenal": [
+      { title: "Aimbot & ESP", game: "Arsenal", description: "Silent aim, triggerbot, and player ESP.", script: "loadstring(game:HttpGet('https://example.com/arsenal_aimbot.lua'))()" },
+      { title: "Auto Win & Rapid Fire", game: "Arsenal", description: "Auto shoot, rapid fire, and instant reload.", script: "loadstring(game:HttpGet('https://example.com/arsenal_autowin.lua'))()" }
+    ],
+    "Doors": [
+      { title: "Auto Skip & Revive", game: "Doors", description: "Auto skip entities, instant revive, and infinite health.", script: "loadstring(game:HttpGet('https://example.com/doors_skip.lua'))()" },
+      { title: "Item ESP & No Clip", game: "Doors", description: "See all items through walls and noclip.", script: "loadstring(game:HttpGet('https://example.com/doors_esp.lua'))()" }
+    ]
+  };
 
   async function searchScripts(query) {
     if (!query.trim()) {
@@ -555,30 +589,63 @@
 
     document.getElementById('scriptsResults').innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-pulse"></i> Loading scripts for "' + escapeHtml(query) + '"...</div>';
 
+    // Try to fetch from scriptblox via a reliable CORS proxy
     try {
-      const proxyUrl = 'https://api.allorigins.win/raw?url=';
+      const proxyUrl = 'https://corsproxy.io/?';
       const apiUrl = `https://scriptblox.com/api/scripts?q=${encodeURIComponent(query)}`;
-      const response = await fetch(proxyUrl + encodeURIComponent(apiUrl));
+      const response = await fetch(proxyUrl + encodeURIComponent(apiUrl), {
+        headers: { 'Origin': 'https://nebula.com' } // helps with some proxies
+      });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const data = await response.json();
       
       let scripts = data.scripts || [];
       
       if (scripts.length === 0) {
-        document.getElementById('scriptsResults').innerHTML = '<div class="no-results"><i class="fas fa-frown"></i> No scripts found for "' + escapeHtml(query) + '". Try another game or term.</div>';
-        return;
+        // No results from API, fallback to sample scripts
+        useFallback(query);
+      } else {
+        renderScripts(scripts);
       }
-      
-      renderScripts(scripts);
     } catch (error) {
-      console.error(error);
-      document.getElementById('scriptsResults').innerHTML = '<div class="no-results"><i class="fas fa-exclamation-triangle"></i> Failed to fetch scripts. Please try again later.</div>';
+      console.warn('Scriptblox fetch failed, using fallback:', error);
+      useFallback(query);
     }
   }
 
-  function renderScripts(scripts) {
+  function useFallback(query) {
+    // Try to find matching fallback scripts for this game
+    let matchedKey = null;
+    for (let key in fallbackScripts) {
+      if (query.toLowerCase().includes(key.toLowerCase())) {
+        matchedKey = key;
+        break;
+      }
+    }
+    if (matchedKey) {
+      renderScripts(fallbackScripts[matchedKey], true);
+    } else {
+      // Show generic fallback message with sample
+      document.getElementById('scriptsResults').innerHTML = `
+        <div class="no-results">
+          <i class="fas fa-cloud-download-alt"></i> Could not fetch live scripts right now.<br>
+          Try searching for a popular game like "Blox Fruits" or use the quick buttons above.
+        </div>
+      `;
+    }
+  }
+
+  function renderScripts(scripts, isFallback = false) {
     const container = document.getElementById('scriptsResults');
     container.innerHTML = '';
+    if (isFallback) {
+      const note = document.createElement('div');
+      note.className = 'no-results';
+      note.style.marginBottom = '1rem';
+      note.style.fontSize = '0.85rem';
+      note.innerHTML = '<i class="fas fa-info-circle"></i> Live search unavailable. Showing example scripts. (Copy and use in your executor)';
+      container.appendChild(note);
+    }
     scripts.forEach(script => {
       const card = document.createElement('div');
       card.className = 'script-card';
@@ -652,7 +719,7 @@
       <div class="modal-overview"><strong>❓ How do I download mobile executors?</strong><br>Click the IPA (iOS) or APK (Android) button in the executor modal. The file will download directly.</div>
       <div class="modal-overview"><strong>🔐 PC executors (cracked) require a password.</strong><br>Each cracked executor has its own password shown in the modal. These are encrypted files; use the provided password to extract/install.</div>
       <div class="modal-overview"><strong>🛡️ Are these executors safe?</strong><br>All executors listed are community-tested and regularly updated. Use at your own discretion.</div>
-      <div class="modal-overview"><strong>📜 Script Hub</strong><br>Searches scriptblox.com for scripts. Use the search bar or click one of the popular game buttons.</div>
+      <div class="modal-overview"><strong>📜 Script Hub</strong><br>Searches scriptblox.com for scripts. If the search fails, you'll see example scripts that you can copy and use.</div>
       <button class="close-modal">Close</button>
     `;
     modal.classList.add('active');
